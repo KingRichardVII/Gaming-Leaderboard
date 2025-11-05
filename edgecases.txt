@@ -1,0 +1,170 @@
+
+# ============================================
+# test file for edge cases proj2
+# ============================================
+
+# Test 1: Basic functionality
+ADD_PLAYER Alice
+ADD_PLAYER Bob
+ADD_PLAYER Carol
+ADD_SCORE Alice 120
+ADD_SCORE Bob 95
+ADD_SCORE Alice 180
+CURRENT Alice
+BEST Alice
+
+# Test 2: Duplicate player
+ADD_PLAYER Alice
+
+# Test 3: Player not found
+ADD_SCORE ZZZ 100
+CURRENT ZZZ
+BEST ZZZ
+HISTORY ZZZ 5
+REMOVE_PLAYER ZZZ
+
+# Test 4: Empty name (will be caught)
+# ADD_PLAYER ""
+
+# Test 5: Case sensitivity for player names
+ADD_PLAYER alice
+ADD_SCORE alice 50
+BEST Alice
+BEST alice
+
+# Test 6: Negative scores (valid - some games use negative scores)
+ADD_SCORE Alice -50
+HISTORY Alice 5
+
+# Test 7: Very large scores
+ADD_SCORE Bob 999999999
+ADD_SCORE Carol 2147483647
+BEST Bob
+BEST Carol
+
+# Test 8: Zero score
+ADD_SCORE Alice 0
+HISTORY Alice 10
+
+# Test 9: History with various k values
+HISTORY Alice 0
+HISTORY Alice 1
+HISTORY Alice 2
+HISTORY Alice 100
+
+# Test 10: Negative k (should error)
+HISTORY Alice -5
+
+# Test 11: TOP_K edge cases
+TOP_K 1
+TOP_K 2
+TOP_K 100
+TOP_K 0
+
+# Test 12: Empty leaderboard scenarios
+CLEAR
+LEN
+PRINT_ALL
+TOP_K 5
+ADD_PLAYER David
+CURRENT David
+BEST David
+
+# Test 13: Players with quoted names (spaces)
+ADD_PLAYER "John Doe"
+ADD_SCORE "John Doe" 150
+CURRENT "John Doe"
+
+# Test 14: Players with underscores
+ADD_PLAYER Jane_Smith
+ADD_SCORE Jane_Smith 175
+BEST Jane_Smith
+
+# Test 15: Multiple scores and best tracking
+ADD_PLAYER TestPlayer
+ADD_SCORE TestPlayer 100
+ADD_SCORE TestPlayer 50
+ADD_SCORE TestPlayer 200
+ADD_SCORE TestPlayer 75
+BEST TestPlayer
+HISTORY TestPlayer 4
+
+# Test 16: Tie-breaking in leaderboard
+ADD_PLAYER Alpha
+ADD_PLAYER Zeta
+ADD_SCORE Alpha 500
+ADD_SCORE Zeta 500
+TOP_K 5
+
+# Test 17: Case insensitive commands
+add_player LowerCase
+ADD_SCORE lowercase 80
+AdD_ScOrE LowerCase 90
+CuRrEnT LowerCase
+
+# Test 18: Extra whitespace handling
+   ADD_PLAYER    Whitespace
+ADD_SCORE   Whitespace   100
+   BEST Whitespace
+
+# Test 19: Comments and blank lines
+
+
+# This is a comment
+ADD_PLAYER CommentTest
+# Another comment
+ADD_SCORE CommentTest 85
+
+# Test 20: Remove and re-add player
+ADD_PLAYER RemoveTest
+ADD_SCORE RemoveTest 120
+REMOVE_PLAYER RemoveTest
+BEST RemoveTest
+ADD_PLAYER RemoveTest
+BEST RemoveTest
+
+# Test 21: Invalid command
+INVALID_COMMAND arg1 arg2
+
+# Test 22: Wrong number of arguments
+ADD_PLAYER
+ADD_PLAYER Too Many Args
+ADD_SCORE OnlyOne
+ADD_SCORE One 100 Extra
+CURRENT
+HISTORY NoK
+TOP_K
+REMOVE_PLAYER
+LEN extra
+CLEAR extra
+PRINT_ALL extra
+
+# Test 23: Invalid score types
+ADD_PLAYER ScoreTest
+ADD_SCORE ScoreTest abc
+ADD_SCORE ScoreTest 12.5
+ADD_SCORE ScoreTest 1e5
+
+# Test 24: Final comprehensive leaderboard
+CLEAR
+ADD_PLAYER Player1
+ADD_PLAYER Player2
+ADD_PLAYER Player3
+ADD_PLAYER Player4
+ADD_PLAYER Player5
+ADD_SCORE Player1 100
+ADD_SCORE Player2 200
+ADD_SCORE Player3 150
+ADD_SCORE Player4 200
+ADD_SCORE Player5 175
+ADD_SCORE Player1 250
+PRINT_ALL
+TOP_K 3
+LEN
+
+# Test 25: QUIT stops processing
+QUIT
+
+# These lines should never execute
+ADD_PLAYER ShouldNotAppear
+PRINT_ALL

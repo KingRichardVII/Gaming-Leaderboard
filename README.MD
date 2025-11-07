@@ -3,7 +3,7 @@
 
 ### Description
 #### This is a command line Gaming Leaderboard that ingests player scores over time, keeping a history per player
-and can produce ranked leaderboards on demand using a heapsort created from scratch.
+#### and can produce ranked leaderboards on demand using a heapsort created from scratch.
 ---
 
 ### Linked List/Vector/heap-sort Design & Invariants
@@ -98,4 +98,5 @@ python3 main.py commands.txt
 
 ## Test Transcript
 **Please see the `sampleoutput.txt` file to see a short session covering the commands and edge cases**
+
 

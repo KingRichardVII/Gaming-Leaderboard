@@ -1,0 +1,38 @@
+(.venv) PS C:\Users\King Richard III\PycharmProjects\Gaming Leaderboard Project> python main.py commands.tx
+USAGE: <program> <commands_file>
+(.venv) PS C:\Users\King Richard III\PycharmProjects\Gaming Leaderboard Project> python main.py co
+USAGE: <program> <commands_file>
+(.venv) PS C:\Users\King Richard III\PycharmProjects\Gaming Leaderboard Project> python main.py commands.txt
+ADD_PLAYER Alice
+ADD_PLAYER Bob
+ADD_PLAYER Carol
+ADD_SCORE Alice 120
+ADD_SCORE Bob 95
+ADD_SCORE Alice 180
+ADD_SCORE Carol 180
+ADD_SCORE Bob 210
+CURRENT Alice
+-> Alice | current=180 | best=180
+BEST Bob
+-> Bob | best=210
+HISTORY Alice 3
+-> 180
+-> 120
+TOP_K 2
+-> 1. Bob | best=210
+-> 2. Alice | best=180
+PRINT_ALL
+-> 1. Bob | best=210
+-> 2. Alice | best=180
+-> 3. Carol | best=180
+LEN
+3
+REMOVE_PLAYER Carol
+PRINT_ALL
+-> 1. Bob | best=210
+-> 2. Alice | best=180
+CLEAR
+LEN
+0
+QUIT
+(.venv) PS C:\Users\King Richard III\PycharmProjects\Gaming Leaderboard Project>

@@ -1,9 +1,10 @@
-
 # ============================================
-# test file for edge cases proj2
+# Gaming Leaderboard — Edge Case Test Script
+# This file exercises parsing, data structure invariants,
+# output formatting, sorting/tie-breaking, and error paths.
 # ============================================
 
-# Test 1: Basic functionality
+# --- Section 1: Basic flow
 ADD_PLAYER Alice
 ADD_PLAYER Bob
 ADD_PLAYER Carol
@@ -13,55 +14,51 @@ ADD_SCORE Alice 180
 CURRENT Alice
 BEST Alice
 
-# Test 2: Duplicate player
+# --- Section 2: Duplicate player
 ADD_PLAYER Alice
 
-# Test 3: Player not found
+# --- Section 3: Player not found
 ADD_SCORE ZZZ 100
 CURRENT ZZZ
 BEST ZZZ
 HISTORY ZZZ 5
 REMOVE_PLAYER ZZZ
 
-# Test 4: Empty name (will be caught)
+# --- Section 4: Empty name (commented on purpose; parser ignores this line)
 # ADD_PLAYER ""
 
-# Test 5: Case sensitivity for player names
+# --- Section 5: Case sensitivity for names
 ADD_PLAYER alice
 ADD_SCORE alice 50
 BEST Alice
 BEST alice
 
-# Test 6: Negative scores (valid - some games use negative scores)
+# --- Section 6: Negative & zero scores (allowed by spec; we track best correctly)
 ADD_SCORE Alice -50
+ADD_SCORE Alice 0
 HISTORY Alice 5
 
-# Test 7: Very large scores
+# --- Section 7: Large scores incl. 32-bit edge
 ADD_SCORE Bob 999999999
 ADD_SCORE Carol 2147483647
+ADD_SCORE Bob -2147483648
 BEST Bob
 BEST Carol
 
-# Test 8: Zero score
-ADD_SCORE Alice 0
-HISTORY Alice 10
-
-# Test 9: History with various k values
+# --- Section 8: HISTORY with various k
 HISTORY Alice 0
 HISTORY Alice 1
 HISTORY Alice 2
 HISTORY Alice 100
-
-# Test 10: Negative k (should error)
 HISTORY Alice -5
 
-# Test 11: TOP_K edge cases
+# --- Section 9: Leaderboard basics & k edge cases
 TOP_K 1
 TOP_K 2
 TOP_K 100
 TOP_K 0
 
-# Test 12: Empty leaderboard scenarios
+# --- Section 10: Empty leaderboard behavior
 CLEAR
 LEN
 PRINT_ALL
@@ -70,17 +67,18 @@ ADD_PLAYER David
 CURRENT David
 BEST David
 
-# Test 13: Players with quoted names (spaces)
+# --- Section 11: Quoted names (spaces in identifiers)
 ADD_PLAYER "John Doe"
 ADD_SCORE "John Doe" 150
 CURRENT "John Doe"
+BEST "John Doe"
 
-# Test 14: Players with underscores
+# --- Section 12: Underscore names
 ADD_PLAYER Jane_Smith
 ADD_SCORE Jane_Smith 175
 BEST Jane_Smith
 
-# Test 15: Multiple scores and best tracking
+# --- Section 13: Multiple scores & best tracking
 ADD_PLAYER TestPlayer
 ADD_SCORE TestPlayer 100
 ADD_SCORE TestPlayer 50
@@ -89,25 +87,26 @@ ADD_SCORE TestPlayer 75
 BEST TestPlayer
 HISTORY TestPlayer 4
 
-# Test 16: Tie-breaking in leaderboard
+# --- Section 14: Tie-breaking (name asc on equal best)
 ADD_PLAYER Alpha
 ADD_PLAYER Zeta
 ADD_SCORE Alpha 500
 ADD_SCORE Zeta 500
+PRINT_ALL
 TOP_K 5
 
-# Test 17: Case insensitive commands
+# --- Section 15: Case-insensitive commands
 add_player LowerCase
 ADD_SCORE lowercase 80
 AdD_ScOrE LowerCase 90
 CuRrEnT LowerCase
 
-# Test 18: Extra whitespace handling
+# --- Section 16: Extra whitespace handling (leading/multiple spaces)
    ADD_PLAYER    Whitespace
 ADD_SCORE   Whitespace   100
    BEST Whitespace
 
-# Test 19: Comments and blank lines
+# --- Section 17: Comments and blank lines (should echo blanks, ignore comments)
 
 
 # This is a comment
@@ -115,7 +114,7 @@ ADD_PLAYER CommentTest
 # Another comment
 ADD_SCORE CommentTest 85
 
-# Test 20: Remove and re-add player
+# --- Section 18: Remove and re-add
 ADD_PLAYER RemoveTest
 ADD_SCORE RemoveTest 120
 REMOVE_PLAYER RemoveTest
@@ -123,10 +122,8 @@ BEST RemoveTest
 ADD_PLAYER RemoveTest
 BEST RemoveTest
 
-# Test 21: Invalid command
+# --- Section 19: Invalid command & wrong arg counts
 INVALID_COMMAND arg1 arg2
-
-# Test 22: Wrong number of arguments
 ADD_PLAYER
 ADD_PLAYER Too Many Args
 ADD_SCORE OnlyOne
@@ -139,13 +136,13 @@ LEN extra
 CLEAR extra
 PRINT_ALL extra
 
-# Test 23: Invalid score types
+# --- Section 20: Invalid score types
 ADD_PLAYER ScoreTest
 ADD_SCORE ScoreTest abc
 ADD_SCORE ScoreTest 12.5
 ADD_SCORE ScoreTest 1e5
 
-# Test 24: Final comprehensive leaderboard
+# --- Section 21: Final comprehensive leaderboard
 CLEAR
 ADD_PLAYER Player1
 ADD_PLAYER Player2
@@ -162,9 +159,9 @@ PRINT_ALL
 TOP_K 3
 LEN
 
-# Test 25: QUIT stops processing
+# --- Section 22: QUIT stops processing
 QUIT
 
-# These lines should never execute
+# These lines should never execute if QUIT works:
 ADD_PLAYER ShouldNotAppear
 PRINT_ALL
